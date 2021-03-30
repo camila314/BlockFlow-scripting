@@ -1,0 +1,6 @@
+*.o
+*.c
+*.dylib
+cystuff/*.h
+build/
+.DS_Store
