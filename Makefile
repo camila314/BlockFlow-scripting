@@ -11,7 +11,7 @@ CXX_FLAGS= $(PYCFLAGS) `python3-config --ldflags` -mmacosx-version-min=10.7 -isy
 
 main: dist
 	@echo "Building project..."
-	@$(CXX) $(CXX_INCL) $(CXX_FLAGS) $(CXX_EXTRA) main.mm pystuff.mm cystuff/EditorUI.c -o $(OUTPUT) -lpython3.9
+	@$(CXX) $(CXX_INCL) $(CXX_FLAGS) $(CXX_EXTRA) main.mm pystuff.mm cystuff/base.c -o $(OUTPUT) -lpython3.9
 	@echo "Finished"
 dist:
 	mkdir dist
@@ -20,4 +20,4 @@ clean:
 inject: # If you have osxinj installed use this.
 	sudo osxinj "Geometry Dash" $(OUTPUT)
 cy:
-	cython cystuff/EditorUI.pyx
+	cython cystuff/base.pyx

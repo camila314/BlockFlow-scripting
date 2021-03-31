@@ -3,7 +3,7 @@
 #include <Cocoa/Cocoa.h>
 using namespace cocos2d;
 
-#include "cystuff/EditorUI.h"
+#include "cystuff/base.h"
 
 static PyObject* PyGD_alert(PyObject *self, PyObject *args) {
     char* title;
@@ -40,11 +40,10 @@ int dostuff(char const* progname)
     //Py_SetProgramName("Interactive");  /* optional but recommended */
 
     PyImport_AppendInittab("pygd", &PyInit_PyGD);
-    PyImport_AppendInittab("EditorUI", &PyInit_EditorUI);
+    PyImport_AppendInittab("EditorUI", &PyInit_base);
     Py_Initialize();
     
-    //char const* fname = "/Users/jakrillis/projects/pygd/cac/test.py";
-    PyRun_SimpleString("from EditorUI import Editor");
+    PyRun_SimpleString("from EditorUI import *");
     PyRun_InteractiveLoop(stdin, "<stdin>");
 
     if (Py_FinalizeEx() < 0) {

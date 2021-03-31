@@ -1,19 +1,30 @@
+#cython: language_level=3
 from base cimport *
-
-include "GDArray.pyx"
 
 cdef public class PyCCObject [object _CCObject, type __CCObject]:
     cdef CCObject* inst
     cdef CCObject* ob_inst(self):
         return self.inst
-    @staticmethod
-    cdef fromPtr(CCObject* usable):
-        i = PyCCObject()
-        i.inst = usable
-        i.inst.retain()
-        return i
+
+    cdef fromPtr(self, CCObject* usable):
+        self.inst = usable
+        self.inst.retain()
+        return self
     def __del__(self):
         self.inst.release()
     @property
     def typeinfo(self):
         return getNode(self.inst).decode()
+    def reinterpret_cast(self):
+        ti = self.typeinfo
+        if ti == "cocos2d::CCArray":
+            return PyCCArray().fromPtr(self.inst)
+        elif ti == "GameObject":
+            return PyGameObject().fromPtr(self.inst)
+        else:
+            return self
+
+
+include "GDArray.pyx"
+include "EditorUI.pyx"
+include "GameObject.pyx"

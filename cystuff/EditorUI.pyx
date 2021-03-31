@@ -1,22 +1,21 @@
 #cython: language_level=3
 #distutils: language = c++
-from base cimport (EditorUI, EditorUI_shared, 
-                  CCArray,
-                  makeUsable)
-include "GDArray.pyx"
+from base cimport *
 
-cdef public class Editor [object PyEditorUI, type PyEditUI]:
-    cdef EditorUI* inst
+cdef public class Editor(PyCCObject) [object PyEditorUI, type PyEditUI]:
+
+    cdef EditorUI* edit_inst(self):
+        return <EditorUI*>self.inst
     def __init__(self):
-        self.inst = EditorUI_shared()
+        self.inst = <CCObject*>EditorUI_shared()
     def pasteObjects(self, obs):
         if type(obs)==str:
             obs = obs.encode()
-        self.inst.pasteObjects(obs)
+        self.edit_inst().pasteObjects(obs)
     @property
     def selectedObjects(self):
-        cdef CCArray* sel = self.inst.getSelectedObjects()
-        c = PyCCArray.fromPtr(sel)
+        cdef CCArray* sel = self.edit_inst().getSelectedObjects()
+        c = PyCCArray().fromPtr(sel)
         return c
     def deselectAll(self):
-        self.inst.deselectAll()
+        self.edit_inst().deselectAll()
