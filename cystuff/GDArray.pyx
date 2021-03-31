@@ -15,3 +15,5 @@ cdef public class PyCCArray(PyCCObject) [object _CCArray, type __CCArray]:
         if e >= len(self):
             raise IndexError("CCArray index out of range")
         return PyCCObject().fromPtr(self.arr_inst().objectAtIndex(e)).reinterpret_cast()
+    def sortBy(self, toSort):
+        return list(sorted(self, key=toSort))

@@ -27,6 +27,7 @@ cdef extern from "../cBind.h":
 
     cppclass EditorUI:
         void pasteObjects(string)
+        void onDuplicate(CCObject*)
         CCArray* getSelectedObjects()
         void deselectAll()
 
@@ -37,3 +38,6 @@ cdef extern from "../cBind.h":
         @staticmethod
         MainThreadCaller* sharedState()
         bool schedulePy(object p)
+
+cdef inline mainThread(object o):
+    MainThreadCaller.sharedState().schedulePy(o)

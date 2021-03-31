@@ -19,7 +19,7 @@ cdef public class PyCCObject [object _CCObject, type __CCObject]:
         ti = self.typeinfo
         if ti == "cocos2d::CCArray":
             return PyCCArray().fromPtr(self.inst)
-        elif ti in ("GameObject", "EffectGameObject", "LabelGameObject", "RingObject"):
+        elif ti in ("GameObject", "EffectGameObject", "LabelGameObject", "RingObject", "AnimatedGameObject"):
             return PyGameObject().fromPtr(self.inst)
         else:
             return self

@@ -210,6 +210,7 @@ public:
     void undoLastAction();
     void redoLastAction();
     void deselectAll();
+    void onDuplicate(CCObject* stub);
     CCMenuItemSpriteExtra* getCreateBtn(int obid, int four);
     cocos2d::CCArray* getSelectedObjects();
     void selectObjects(cocos2d::CCArray* objs, bool keep);
