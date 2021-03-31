@@ -1,8 +1,9 @@
 #include "pystuff.h"
 #include <Cacao.hpp>
 #include <Cocoa/Cocoa.h>
+#include <string>
 using namespace cocos2d;
-
+#include "MTC.h"
 #include "cystuff/base.h"
 
 static PyObject* PyGD_alert(PyObject *self, PyObject *args) {
@@ -39,12 +40,23 @@ int dostuff(char const* progname)
 {
     //Py_SetProgramName("Interactive");  /* optional but recommended */
 
+    auto mtc = MainThreadCaller::sharedState();
+
+    CCDirector::sharedDirector()
+                ->getScheduler()
+                ->scheduleUpdateForTarget(mtc,1,false);
+
     PyImport_AppendInittab("pygd", &PyInit_PyGD);
     PyImport_AppendInittab("EditorUI", &PyInit_base);
     Py_Initialize();
     
     PyRun_SimpleString("from EditorUI import *");
     PyRun_InteractiveLoop(stdin, "<stdin>");
+
+
+    CCDirector::sharedDirector()
+                ->getScheduler()
+                ->unscheduleAllForTarget(mtc);
 
     if (Py_FinalizeEx() < 0) {
         printf("what happened\n");

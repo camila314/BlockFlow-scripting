@@ -19,11 +19,10 @@ cdef public class PyCCObject [object _CCObject, type __CCObject]:
         ti = self.typeinfo
         if ti == "cocos2d::CCArray":
             return PyCCArray().fromPtr(self.inst)
-        elif ti == "GameObject":
+        elif ti in ("GameObject", "EffectGameObject", "LabelGameObject", "RingObject"):
             return PyGameObject().fromPtr(self.inst)
         else:
             return self
-
 
 include "GDArray.pyx"
 include "EditorUI.pyx"

@@ -11,7 +11,7 @@ cdef public class Editor(PyCCObject) [object PyEditorUI, type PyEditUI]:
     def pasteObjects(self, obs):
         if type(obs)==str:
             obs = obs.encode()
-        self.edit_inst().pasteObjects(obs)
+        MainThreadCaller.sharedState().schedulePy(lambda: self.edit_inst().pasteObjects(obs))
     @property
     def selectedObjects(self):
         cdef CCArray* sel = self.edit_inst().getSelectedObjects()

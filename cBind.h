@@ -5,6 +5,8 @@ using namespace cocos2d;
 #include <cstdlib>
 #include <memory>
 #include <cxxabi.h>
+#include <string>
+#include "MTC.h"
 
 char const* demangle(const char* name) {
 
@@ -32,3 +34,5 @@ inline char* getNode(CCObject* node) {
     char* name = (char*)(demangle(typeid(*node).name()));
     return name;
 }
+
+void EditorUI_pasteObjects(EditorUI* self, std::string objects);
