@@ -1,0 +1,15 @@
+{
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	],
+    "build_systems":
+    [
+        {
+            "name": "Cacao",
+            "shell_cmd": "cd ~/projects/blockflow; make cy; make"
+        }
+    ]
+}

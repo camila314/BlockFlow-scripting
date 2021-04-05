@@ -22,6 +22,8 @@ MainThreadCaller* MainThreadCaller::sharedState() {
     return MainThreadCaller::shared;
 }
 void MainThreadCaller::update(float o) {
+    if (!threadID)
+        threadID = pthread_self();
     gstate = PyGILState_Ensure();
     while (!things.empty()) {
         PyObject* func = things.back();

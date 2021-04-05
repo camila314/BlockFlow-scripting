@@ -16,23 +16,35 @@ cdef extern from "../cBind.h":
         CCPoint getPosition()
         void setRotation(float)
         float getRotation()
-
     cppclass CCArray(CCObject):
+        @staticmethod
+        CCArray* create()
         int count()
         CCObject* objectAtIndex(unsigned int)
+        void addObject(CCObject*)
 
     EditorUI* EditorUI_shared()
+    bool onMainThread()
     long makeUsable(void*)
     char* getNode(CCObject*)
 
+    cppclass LevelEditorLayer:
+        GameObject* createObject(int, CCPoint, bool)
+
     cppclass EditorUI:
+        void selectObjects(CCArray*, bool)
         void pasteObjects(string)
         void onDuplicate(CCObject*)
         CCArray* getSelectedObjects()
         void deselectAll()
+        LevelEditorLayer* _editorLayer()
 
     cppclass GameObject(CCNode):
+        int _id()
         void destroyObject()
+        @staticmethod
+        GameObject* createWithKey(int k)
+        int& _zOrder()
 
     cppclass MainThreadCaller:
         @staticmethod

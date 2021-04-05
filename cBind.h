@@ -35,4 +35,6 @@ inline char* getNode(CCObject* node) {
     return name;
 }
 
-void EditorUI_pasteObjects(EditorUI* self, std::string objects);
+inline bool onMainThread() {
+	return MainThreadCaller::sharedState()->onMain();
+}

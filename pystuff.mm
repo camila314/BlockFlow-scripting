@@ -50,7 +50,7 @@ int dostuff(char const* progname)
     PyImport_AppendInittab("EditorUI", &PyInit_base);
     Py_Initialize();
     
-    PyRun_SimpleString("from EditorUI import *");
+    PyRun_SimpleString("from EditorUI import *;import sys;sys.path.append('/Users/jakrillis/projects/3dmodel2gd')");
     PyRun_InteractiveLoop(stdin, "<stdin>");
 
 

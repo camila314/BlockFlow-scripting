@@ -24,6 +24,24 @@ cdef public class PyCCObject [object _CCObject, type __CCObject]:
         else:
             return self
 
+def thread_sync(func):
+    def k(*args, **kwargs):
+        if (onMainThread()):
+            return func(*args, **kwargs)
+        future = []
+        mainThread(lambda: future.append(func(*args, **kwargs)))
+        while len(future)==0:
+            continue
+        return future[0]
+    return k
+
+def thread_async(func):
+    def k(*args, **kwargs):
+        if (onMainThread()):
+            return func(*args, **kwargs)
+        mainThread(lambda: func(*args, **kwargs))
+    return k
 include "GDArray.pyx"
 include "EditorUI.pyx"
 include "GameObject.pyx"
+include "PyLvl.pyx"

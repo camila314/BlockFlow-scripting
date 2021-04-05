@@ -19,6 +19,13 @@ cdef public class PyGameObject(PyCCObject) [object PyGameOb, type PyGameObj]:
         self.gameob_inst().setPosition(p)
         return self
 
+    def incrementZ(self):
+        (&self.gameob_inst()._zOrder())[0] = self.gameob_inst()._zOrder() + 1
+
+    @property
+    def id(self):
+        return self.gameob_inst()._id()
+
     @property
     def position(self):
         cdef CCPoint p = self.gameob_inst().getPosition()

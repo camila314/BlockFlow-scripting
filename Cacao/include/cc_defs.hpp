@@ -122,6 +122,7 @@ public:
     CLASS_PARAM(bool, spawnTriggered, 0x379);
     CLASS_PARAM(int, uuid, 0x36c);
     CLASS_PARAM(int, colorID, 0x3bc);
+    CLASS_PARAM(int, zOrder, 0x42c);
 };
 
 class SpawnTriggerAction : public cocos2d::CCNode { // omg
@@ -187,7 +188,8 @@ public:
 class EditorUI;
 class LevelEditorLayer : public GJBaseGameLayer {
 public:
-    void createObjectsFromString(std::string st, bool idk);
+    void createObjectsFromString(std::string st, bool undo);
+    GameObject* createObject(int id, cocos2d::CCPoint p, bool undo);
     void removeAllObjects();
     void undoLastAction();
     void redoLastAction();
